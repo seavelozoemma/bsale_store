@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
+  <!-- Font Roboto -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/spinner.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <title>Tienda</title>
+</head>
+
+<body>
+  <nav class="navbar fixed-top navbar-light">
+    <div class="container-fluid">
+      <a class="navbar-brand">Tienda Online</a>
+      <div class="nav navbar-nav navbar-right">
+        <div id="cart-button" class="d-flex justify-content-between cursor">
+          <i class="bi bi-cart-fill me-2"></i>
+          <span id="product-count"></span>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div class="container-fluid position-relative">
+    <div id="alert-content" class="position-absolute"></div>
+    <section class="section-body">
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-xs-12 mx-auto">
+          <div id="content-category">
+            <form class="row g-3">
+              <div class="col-auto">
+                <input id="search" type="search" placeholder="Buscar..." class="form-control">
+              </div>
+              <div class="col-auto">
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <span id="order-label">Orden</span>
+                  </button>
+                  <ul id="orders" class="dropdown-menu">
+                    <li order-id="1"><a class="dropdown-item">Alfabetico (A-Z)</a></li>
+                    <li order-id="2"><a class="dropdown-item">Alfabetico (Z-A)</a></li>
+                    <li order-id="3"><a class="dropdown-item">Menor-Mayor Precio</a></li>
+                    <li order-id="4"><a class="dropdown-item">Mayor-Menor Precio</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-auto">
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <span id="category-label">Categorias</span>
+                    <span id="loader-category"></span>
+                  </button>
+                  <ul id="categories" class="dropdown-menu">
+                  </ul>
+                </div>
+                <span id="error-category" class="fs-6"></span>
+              </div>
+              <div class="col-auto">
+                  <button id="filter" type="button" class="btn btn-primary">Filtrar</button>
+                  <button id="clear" type="button" class="btn">Limpiar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-8 col-md-8 col-xs-12 mx-auto">
+      <div id="content-product" class="row mt-5 hidden">
+      </div>
+      <div id="no-content-product" class="row mt-5 hidden">
+        <div class="d-flex flex-column text-center">
+          <div class="w-100">
+            <span class="text-muted fs-1 bolder"><i class="bi bi-patch-exclamation-fill"></i></span>
+            <span class="text-muted fs-1 bolder">No se han encontrado resultados</span>
+          </div>
+          <div class="text-muted fs-4">Intenta con otro filtro</div>
+        </div>
+      </div>
+      <div id="error-content-product" class="row mt-5 hidden">
+        <div class="d-flex flex-column text-center">
+          <div class="w-100">
+            <span class="text-muted fs-1 bolder"><i class="bi bi-emoji-dizzy-fill"></i></span>
+            <span class="text-muted fs-1 bolder">No pudimos cargar productos</span>
+          </div>
+          <div class="text-muted fs-4">Intenta más tarde</div>
+        </div>
+      </div>
+      <div id="content-loader">
+        <div id="loader">
+          <div class="lds-default">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </section>
+
+
+  <div id="cartModal" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Tu Carrito</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div id="modal-cart-body" class="modal-body">
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+    integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+  <script src="../src/const.js"></script>
+  <script src="../src/storage.js"></script>
+  <script src="../src/util.js"></script>
+  <script src="../src/http.js"></script>
+  <script src="../src/template.js"></script>
+  <script src="../src/main.js"></script>
+</body>
+
+</html>
