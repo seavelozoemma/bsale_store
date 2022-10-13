@@ -1,15 +1,9 @@
-const toFormat = (amount) => {
-    return amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&.").replace('.00', '');
-}
 
-const toCapitalize = (value) => {
-    return value.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
-}
 
 function getTemplateModalCart() {
     const list = getCart();
     var templates = list.map((product) => (
-    `<div class="row">
+        `<div class="row">
         <div class="col-lg-6 col-md-6 col-xs-12">
            <span class="text-primary">${product.name}</span>
         </div>
@@ -20,14 +14,14 @@ function getTemplateModalCart() {
             $ ${toFormat(product.price)}
         </div>
         <div class="col-lg-2 col-md-2 col-xs-12">
-            <span class="text-secondary">$ ${toFormat(parseInt(product.price)*parseInt(product.amount))}</span>
+            <span class="text-secondary">$ ${toFormat(parseInt(product.price) * parseInt(product.amount))}</span>
         </div>
     </div> `));
     templates = templates.join(' ');
-    const total = list.reduce((accumulator, current)=>{
-        return accumulator + (parseInt(current.price)*parseInt(current.amount));
+    const total = list.reduce((accumulator, current) => {
+        return accumulator + (parseInt(current.price) * parseInt(current.amount));
     }, 0)
-    templates = templates +  `<div class="row">
+    templates = templates + `<div class="row">
             <div class="offset-lg-9 offset-md-9 col-lg-2 col-md-2 col-xs-4">
             <span class="text-primary">$ ${toFormat(total)}</span>
         </div>
@@ -47,6 +41,14 @@ function getTemplateItemCart() {
     }
 }
 
+function getTemplateLoaderSpinner() {
+    return `
+    <div class="spinner-border category text-light" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+  `;
+}
+
 function getTemplateGlobalAlert(id, title, message, type = 'success') {
     return `
         <div class="alert-global--${id} alert alert-${type} alert-dismissible fade show" role="alert">
@@ -58,7 +60,7 @@ function getTemplateGlobalAlert(id, title, message, type = 'success') {
 
 function getTemplateCategory(categories) {
     var message = '<li category-id="0"><a class="dropdown-item">Todas</a></li>';
-    categories.forEach(category=>{
+    categories.forEach(category => {
         message = message + `<li category-id="${category.id}"><a class="dropdown-item">${toCapitalize(category.name)}</a></li>`
     });
     return message;
@@ -80,9 +82,11 @@ function getTemplateProduct(products) {
                         <small class="text-muted fw-lighter">${toCapitalize(product.category.name)}</small>
                         <h5 class="card-title"><span class="text-primary fs-5 fw-light">${product.name}</span></h5>
                         <p class="card-text">
-                            <span class="text-danger fs-6 fw-bold">$ ${toFormat(product.price)}</span>
-                            <span></span>
-                        </p>
+                            <span class="text-danger fs-6 fw-bold">$ ${toFormat(product.price)}</span>`
+        if (product.discount && product.discount > 0) {
+            message = message + `<span class="ms-2 text-muted"><sup><small><s>$ ${toFormat(withoutDiscount(product))}</s></small></sup></span>`
+        }
+        message = message + `</p>
                         <div class="row">
                             <div ${quantity === 0 ? "style='display:none'" : ""} class="col-lg-6 col-md-6 col-xs-12">
                                 <div class="in-cart">

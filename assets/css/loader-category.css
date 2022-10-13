@@ -1,0 +1,7 @@
+.spinner-border.category {
+    width: 10px;
+    height: 10px;
+    position: relative;
+    left: 2px;
+    bottom: 2px;
+}

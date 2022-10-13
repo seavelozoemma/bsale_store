@@ -16,6 +16,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./assets/css/spinner.css">
+  <link rel="stylesheet" href="./assets/css/loader-category.css">
+  <link rel="stylesheet" href="./assets/css/alert-global.css">
   <link rel="stylesheet" href="./assets/css/style.css">
   <title>Tienda</title>
 </head>
@@ -33,14 +35,14 @@
     </div>
   </nav>
   <div class="container-fluid position-relative">
-    <div id="alert-content" class="position-absolute"></div>
+    <div id="alert-content" class="alert-global"></div>
     <section class="section-body">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-xs-12 mx-auto">
           <div id="content-category">
-            <form class="row g-3">
+            <form id="searchForm" class="row g-3">
               <div class="col-auto">
-                <input id="search" type="search" placeholder="Buscar..." class="form-control">
+                <input id="search" type="text" autocomplete="off" placeholder="Buscar..." class="form-control">
               </div>
               <div class="col-auto">
                 <div class="dropdown">

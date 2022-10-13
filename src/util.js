@@ -1,3 +1,19 @@
+const toFormat = (amount) => {
+    return amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&.").replace('.00', '');
+}
+
+const toCapitalize = (value) => {
+    return value.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
+}
+
+const withoutDiscount = ({price, discount}) => {
+    if(discount>0) {
+        const priceDiscount = toFixed(((price * discount) / 100), 0);
+        return price + priceDiscount;
+    }
+    return 0;
+}
+
 function getCart() {
     const list = JSON.parse(getItem(STORAGE_NAME));
     return list;

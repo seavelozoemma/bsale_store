@@ -100,6 +100,11 @@ $(() => {
         showProducts();
     });
 
+    $('#searchForm').submit(function (event) {
+        event.preventDefault();
+        $("#filter").click();
+    });
+
     // agrego un valor por defecto siempre
     function addDefaultStorage() {
         const cart = getItem(STORAGE_NAME);
@@ -111,10 +116,13 @@ $(() => {
     // llamado a servicio de productos
     async function fetchProducts(text = null, category = 0, order = 0) {
         $("#content-loader").show();
+        $("#content-product").addClass('hidden');
+        $("#no-content-product").addClass('hidden');
+        $("#error-content-product").addClass('hidden');
         try {
             products = await getProducts(text, category, order);
             $("#content-loader").hide();
-            if (products) {
+            if (products && products.length>0) {
                 $("#content-product").removeClass('hidden');
                 showProducts()
             } else {
@@ -128,11 +136,11 @@ $(() => {
 
     // llamado a servicio de categorias
     async function fetchCategories() {
-        $("#loader-category").empty().append('<i class="bi bi-gear-fill"></i>');
+        $("#loader-category").empty().append(getTemplateLoaderSpinner());
         try {
             categories = await getCategories();
             $("#loader-category").empty();
-            if (categories) {
+            if (categories && categories.length>0) {
                 showCategories();
             } else {
                 $("#error-category").addClass('text-warning').text("No existen categorias")
